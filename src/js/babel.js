@@ -77,9 +77,8 @@ export default class BabelCompiler extends CompilerBase {
       if (presets && presets.length === opts.presets.length) opts.presets = presets;
     }
 
-    const c = Uglify.minify(
-      babel.transform(sourceCode, opts).code, { fromString: true, compress: true, mangle: true }).code;
-    // console.log(c);
+    const c = Uglify.minify(babel.transform(sourceCode, opts).code,
+      { fromString: true, compress: true, mangle: true }).code;
     return {
       code: c,
       mimeType: 'application/javascript'
