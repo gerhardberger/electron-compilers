@@ -1,4 +1,5 @@
 import path from 'path';
+import Uglify from 'uglify-js';
 import {CompilerBase} from '../compiler-base';
 
 const mimeTypes = ['text/jsx', 'application/javascript'];
@@ -76,8 +77,11 @@ export default class BabelCompiler extends CompilerBase {
       if (presets && presets.length === opts.presets.length) opts.presets = presets;
     }
 
+    const c = Uglify.minify(
+      babel.transform(sourceCode, opts).code, { fromString: true, compress: true, mangle: true }).code;
+    // console.log(c);
     return {
-      code: babel.transform(sourceCode, opts).code,
+      code: c,
       mimeType: 'application/javascript'
     };
   }
